@@ -2,23 +2,23 @@ import mongoose from "mongoose";
 
 
 const userSchema=new mongoose.Schema({
-    name:{
+    fullName:{
         type:String,
         required:true
     },
     userName:{
         type:String,
-        requires:true,
+        required:true,
         unique:true
     },
      email:{
         type:String,
-        requires:true,
+        required:true,
         unique:true
     },
     password:{
         type:String,
-        requires:true,
+        required:true,
     },
     profileImage:{
         type:String
@@ -51,6 +51,16 @@ const userSchema=new mongoose.Schema({
     story:
          {type:mongoose.Schema.Types.ObjectId,
             ref:"Story"
+          },
+          resetOtp:{
+            type:String
+          },
+          otpExpires:{
+type:Date
+          },
+          isOtpVerified:{
+            type:Boolean,
+            default:false
           }
     
 },{timestamps:true})

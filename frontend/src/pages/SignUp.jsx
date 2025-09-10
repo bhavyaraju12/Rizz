@@ -1,12 +1,24 @@
-import React, { useState } from 'react';
-import { Eye, EyeOff, User, Mail, Lock, Sparkles, MessageCircle } from 'lucide-react';
+import React, { useState } from "react";
+import axios from "axios";
+import { serverUrl } from "../App"; 
+import {
+  Eye,
+  EyeOff,
+  User,
+  Mail,
+  Lock,
+  Sparkles,
+  MessageCircle,
+} from "lucide-react";
+import { Link } from "react-router-dom";
 
 export default function SignUp() {
   const [formData, setFormData] = useState({
-    fullName: '',
-    email: '',
-    password: '',
-    confirmPassword: ''
+    fullName: "",
+    userName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
   });
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -14,22 +26,40 @@ export default function SignUp() {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsLoading(true);
-    
-    // Simulate API call
-    setTimeout(() => {
-      setIsLoading(false);
-      alert('Welcome to Rizz! 🎉');
-    }, 2000);
-  };
+  e.preventDefault();
+  setIsLoading(true);
+
+  if (formData.password !== formData.confirmPassword) {
+    alert("Passwords do not match!");
+    setIsLoading(false);
+    return;
+  }
+
+  const { confirmPassword, ...dataToSend } = formData;
+
+  try {
+    const result = await axios.post(
+      `${serverUrl}/api/auth/signup`,
+      dataToSend,
+      { withCredentials: true }
+    );
+    alert("Signup successful! 🎉");
+    console.log(result.data);
+  } catch (error) {
+    console.error(error);
+    alert(error.response?.data?.message || "Something went wrong!");
+  } finally {
+    setIsLoading(false);
+  }
+};
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-900 via-purple-900 to-pink-800 flex items-center justify-center p-4 relative overflow-hidden">
@@ -44,10 +74,16 @@ export default function SignUp() {
       <div className="absolute top-20 left-20 text-blue-300 opacity-60 animate-bounce">
         <MessageCircle size={24} />
       </div>
-      <div className="absolute top-32 right-32 text-pink-300 opacity-60 animate-bounce" style={{ animationDelay: '0.5s' }}>
+      <div
+        className="absolute top-32 right-32 text-pink-300 opacity-60 animate-bounce"
+        style={{ animationDelay: "0.5s" }}
+      >
         <Sparkles size={28} />
       </div>
-      <div className="absolute bottom-32 left-32 text-cyan-300 opacity-60 animate-bounce" style={{ animationDelay: '1s' }}>
+      <div
+        className="absolute bottom-32 left-32 text-cyan-300 opacity-60 animate-bounce"
+        style={{ animationDelay: "1s" }}
+      >
         <Sparkles size={20} />
       </div>
 
@@ -64,8 +100,12 @@ export default function SignUp() {
             </h1>
             <Sparkles className="text-pink-400 w-6 h-6 animate-pulse" />
           </div>
-          <p className="text-gray-300 text-lg">Join the conversation that matters</p>
-          <p className="text-gray-400 text-sm mt-2">Connect, share, and discover your vibe</p>
+          <p className="text-gray-300 text-lg">
+            Join the conversation that matters
+          </p>
+          <p className="text-gray-400 text-sm mt-2">
+            Connect, share, and discover your vibe
+          </p>
         </div>
 
         {/* Signup Form */}
@@ -89,6 +129,26 @@ export default function SignUp() {
                 />
               </div>
             </div>
+{/* Username */}
+<div className="relative">
+  <label className="block text-sm font-medium text-gray-200 mb-2">
+    Username
+  </label>
+  <div className="relative">
+    <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+    <input
+      type="text"
+      name="userName"
+      value={formData.userName}
+      onChange={handleInputChange}
+      className="w-full pl-10 pr-4 py-3 bg-white/5 border border-white/20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-transparent transition-all duration-300"
+      placeholder="Choose a username"
+      required
+    />
+  </div>
+</div>
+
+
 
             {/* Email */}
             <div className="relative">
@@ -130,7 +190,11 @@ export default function SignUp() {
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white transition-colors duration-200"
                 >
-                  {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                  {showPassword ? (
+                    <EyeOff className="w-5 h-5" />
+                  ) : (
+                    <Eye className="w-5 h-5" />
+                  )}
                 </button>
               </div>
             </div>
@@ -151,12 +215,20 @@ export default function SignUp() {
                   placeholder="Confirm your password"
                   required
                 />
+                {formData.confirmPassword && formData.password !== formData.confirmPassword && (
+  <p className="text-red-400 text-sm mt-1">Passwords do not match</p>
+)}
+
                 <button
                   type="button"
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                   className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white transition-colors duration-200"
                 >
-                  {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                  {showConfirmPassword ? (
+                    <EyeOff className="w-5 h-5" />
+                  ) : (
+                    <Eye className="w-5 h-5" />
+                  )}
                 </button>
               </div>
             </div>
@@ -170,12 +242,18 @@ export default function SignUp() {
                 required
               />
               <label htmlFor="terms" className="text-sm text-gray-300">
-                I agree to the{' '}
-                <a href="#" className="text-cyan-400 hover:text-cyan-300 transition-colors duration-200">
+                I agree to the{" "}
+                <a
+                  href="#"
+                  className="text-cyan-400 hover:text-cyan-300 transition-colors duration-200"
+                >
                   Terms of Service
-                </a>{' '}
-                and{' '}
-                <a href="#" className="text-cyan-400 hover:text-cyan-300 transition-colors duration-200">
+                </a>{" "}
+                and{" "}
+                <a
+                  href="#"
+                  className="text-cyan-400 hover:text-cyan-300 transition-colors duration-200"
+                >
                   Privacy Policy
                 </a>
               </label>
@@ -205,32 +283,35 @@ export default function SignUp() {
           {/* Login Link */}
           <div className="mt-6 text-center">
             <p className="text-gray-400">
-              Already have an account?{' '}
-              <a href="#" className="text-cyan-400 hover:text-cyan-300 font-medium transition-colors duration-200">
+              Already have an account?{" "}
+              <Link
+                to="/signin"
+                className="text-cyan-400 hover:text-cyan-300 font-medium transition-colors duration-200"
+              >
                 Sign in
-              </a>
+              </Link>
             </p>
           </div>
 
           {/* Social Login Options */}
           <div className="mt-8">
             <div className="relative">
-              <div className="absolute inset-0 flex items-center">
+              {/* <div className="absolute inset-0 flex items-center">
                 <div className="w-full border-t border-white/20"></div>
               </div>
               <div className="relative flex justify-center text-sm">
                 <span className="px-2 bg-transparent text-gray-400">Or continue with</span>
-              </div>
+              </div> */}
             </div>
 
-            <div className="mt-6 grid grid-cols-2 gap-3">
+            {/* <div className="mt-6 grid grid-cols-2 gap-3">
               <button className="w-full inline-flex justify-center py-2.5 px-4 rounded-lg shadow-sm bg-white/5 border border-white/20 text-sm font-medium text-gray-300 hover:bg-white/10 transition-all duration-200">
                 <span>Google</span>
               </button>
               <button className="w-full inline-flex justify-center py-2.5 px-4 rounded-lg shadow-sm bg-white/5 border border-white/20 text-sm font-medium text-gray-300 hover:bg-white/10 transition-all duration-200">
                 <span>Apple</span>
               </button>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
