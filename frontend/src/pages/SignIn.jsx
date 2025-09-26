@@ -11,6 +11,8 @@ import {
   MessageCircle,
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setUserData } from "../redux/userSlice";
 
 export default function SignIn() {
   const [formData, setFormData] = useState({
@@ -20,6 +22,9 @@ export default function SignIn() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const dispatch=useDispatch()
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -27,11 +32,14 @@ export default function SignIn() {
       ...prev,
       [name]: value,
     }));
+    // Clear error when user starts typing
+    if (error) setError("");
   };
 
   const handleSubmit = async (e) => {
   e.preventDefault();
   setIsLoading(true);
+  setError("");
 
   const dataToSend = { ...formData }; 
 
@@ -41,11 +49,11 @@ export default function SignIn() {
       dataToSend,
       { withCredentials: true }
     );
-    alert("Sigin successful! 🎉");
-    console.log(result.data);
+    dispatch(setUserData(result.data))
+setIsLoading(false);
   } catch (error) {
     console.error(error);
-    alert(error.response?.data?.message || "Something went wrong!");
+    setError(error.response?.data?.message || "Something went wrong!");
   } finally {
     setIsLoading(false);
   }
@@ -102,6 +110,13 @@ export default function SignIn() {
         {/* Signup Form */}
         <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 shadow-2xl border border-white/20">
           <div className="space-y-6">
+          
+          {/* Error Message */}
+          {error && (
+            <div className="bg-red-500/10 border border-red-500/20 rounded-xl p-4">
+              <p className="text-red-400 text-sm">{error}</p>
+            </div>
+          )}
           
 {/* Username */}
 <div className="relative">
