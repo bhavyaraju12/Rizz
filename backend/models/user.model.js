@@ -22,13 +22,26 @@ const userSchema = new mongoose.Schema(
     },
     profileImage: {
       type: String,
-      default: "", // It's good practice to provide a default value
+      default: "", 
     },
+    bio: {
+      type: String,
+      default: "",
+    },
+    profession: {
+      type: String,
+      default: "",
+    },
+    gender: {
+      type: String,
+      enum: ["male","female"]
+        },
+
     followers: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
     following: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
     posts: [{ type: mongoose.Schema.Types.ObjectId, ref: "Post" }],
     saved: [{ type: mongoose.Schema.Types.ObjectId, ref: "Post" }],
-    loops: [{ type: mongoose.Schema.Types.ObjectId, ref: "Loop" }], // Renamed to plural for clarity
+    loops: [{ type: mongoose.Schema.Types.ObjectId, ref: "Loop" }], 
     story: { type: mongoose.Schema.Types.ObjectId, ref: "Story" },
     resetOtp: {
       type: String,
