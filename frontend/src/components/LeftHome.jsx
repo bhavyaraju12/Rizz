@@ -26,7 +26,7 @@ console.log(error)
     }
   }
   return (
-  <div className="w-[33%] hidden lg:flex flex-col min-h-[100vh] bg-black border-r-2 border-gray-900">
+  <div className="w-[33%] hidden lg:flex flex-col h-screen bg-black border-r-2 border-gray-900">
     
  <div className="w-full h-[100px] flex items-center px-5">
   <img src={logo} alt="Logo" className="h-[100px] w-auto mb-2.5 -ml-5" />

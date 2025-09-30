@@ -14,7 +14,7 @@ const OtherUser = ({user}) => {
         <div className='text-[15px] text-gray-400 font-semibold'>{user.fullName} </div>
       </div>
       </div>
-      <button className="px-[10px] w-[100px] py-[5px] h-[40px] bg-gradient-to-r from-cyan-500 to-pink-500 text-white rounded-2xl 
+      <button className="px-[6px] w-[70px] py-[3px] h-[30px] bg-gradient-to-r from-cyan-500 to-pink-500 text-white rounded-2xl 
                    hover:scale-105 hover:from-cyan-500 hover:to-cyan-500 transition-all duration-600 ease-in-out">
   Follow
 </button>
