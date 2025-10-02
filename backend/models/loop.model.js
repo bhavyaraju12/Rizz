@@ -22,18 +22,23 @@ const loopSchema = new mongoose.Schema(
     },
     likes: [
       {
-        // FIX: Changed mongoose.schema to mongoose.Schema
+       
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
       },
     ],
-    comments: [
-      {
-        // FIX: Changed mongoose.schema to mongoose.Schema
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-      },
-    ],
+     comments: [
+          {
+            author:
+           {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User",},
+            message:{
+              type: String
+            }
+           
+          },
+        ],
   },
   { timestamps: true }
 );

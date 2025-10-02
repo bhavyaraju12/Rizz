@@ -32,7 +32,7 @@ const getSuggestedUsers = () => {
     };
 
     fetchSuggestedUsers();
-    // RECOMMENDATION 2: Add dispatch to the dependency array
+   
   }, [userData, dispatch]);
 
   return { loading };

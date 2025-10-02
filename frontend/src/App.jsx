@@ -9,48 +9,40 @@ import getCurrentUser from "./hooks/getCurrentUser";
 import getSuggestedUsers from "./hooks/getSuggestedUsers";
 import Profile from "./pages/Profile";
 import EditProfile from "./pages/EditProfile";
+import Upload from "./pages/Upload";
+import getAllPost from "./hooks/getAllPost";
 
 export const serverUrl = "http://localhost:8000";
 
 const App = () => {
   const { userData, isAuthChecked } = useSelector((state) => state.user);
   
-  
+
   const { loading: isUserLoading } = getCurrentUser();
   const { loading: areSuggestionsLoading } = getSuggestedUsers();
-
   
-  if (isUserLoading || areSuggestionsLoading || !isAuthChecked) {
-    return <div>Loading...</div>;
+  const { loading: arePostsLoading } = getAllPost();
+
+  const isAppLoading = isUserLoading || areSuggestionsLoading || arePostsLoading || !isAuthChecked;
+  
+  if (isAppLoading) {
+    return <div>Loading...</div>; 
   }
 
   return (
     <Routes>
-      <Route
-        path="/signup"
-        element={!userData ? <SignUp /> : <Navigate to="/" />}
-      />
-      <Route
-        path="/signin"
-        element={!userData ? <SignIn /> : <Navigate to="/" />}
-      />
-      <Route
-        path="/"
-        element={userData ? <Home /> : <Navigate to="/signin" />}
-      />
-      <Route
-        path="/forgot-password"
-        element={!userData ? <ForgotPassword /> : <Navigate to="/" />}
-      />
-      <Route
-        path="/profile/:userName"
-        element={userData ? <Profile /> : <Navigate to="/signin" />}
-      />
-      <Route
-        path="/editprofile"
-        element={userData ? <EditProfile /> : <Navigate to="/signin" />}
-      />
       
+      <Route path="/signup" element={!userData ? <SignUp /> : <Navigate to="/" />} />
+      <Route path="/signin" element={!userData ? <SignIn /> : <Navigate to="/" />} />
+      <Route path="/forgot-password" element={!userData ? <ForgotPassword /> : <Navigate to="/" />} />
+      
+      
+      <Route path="/" element={userData ? <Home /> : <Navigate to="/signin" />} />
+      <Route path="/profile/:userName" element={userData ? <Profile /> : <Navigate to="/signin" />} />
+      <Route path="/editprofile" element={userData ? <EditProfile /> : <Navigate to="/signin" />} />
+      <Route path="/upload" element={userData ? <Upload userData={userData}/> : <Navigate to="/signin" />} />
+
+      <Route path="*" element={<Navigate to={userData ? "/" : "/signin"} />} />
     </Routes>
   );
 };

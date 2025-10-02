@@ -78,7 +78,7 @@ const Profile = () => {
         );
     }
     
-    // 5. Check if the current profile belongs to the logged-in user
+    
     const isOwnProfile = profileData._id === userData?._id;
 
     return (
