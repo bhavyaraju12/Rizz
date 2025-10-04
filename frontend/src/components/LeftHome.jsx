@@ -30,12 +30,12 @@ console.log(error)
   <div className="w-[33%] hidden lg:flex flex-col h-screen bg-black border-r-2 border-gray-900">
     
  <div className="w-full h-[100px] flex items-center px-5">
-  <img src={logo} alt="Logo" className="h-[100px] w-auto mb-2.5 -ml-5" />
-
-  <div>
-    <FaRegHeart className='text-white w-[25px] h-[25px] ml-60 mb-5' />
+  <img src={logo} alt="Logo" className="h-[100px] w-auto mb-2.5 ml-1" />
+  
+  <div> 
+    <FaRegHeart className='text-white w-[25px] h-[25px] mb-4 ml-35' /> 
   </div>
- </div>
+</div>
  <div className='flex items-center w-full justify-between gap-[10px] px-10 border-b-2 border-b-gray-900 py-[10px]' >
   <div className='flex items-center gap-[10px]'> 
   <div className='w-[70px] h-[70px] border-2 border-black rounded-full cursor-pointer overflow-hidden'  onClick={() => navigate(`/profile/${userData.userName}`)} >

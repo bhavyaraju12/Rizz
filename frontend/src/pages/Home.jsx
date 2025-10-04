@@ -5,7 +5,7 @@ import Feed from '../components/Feed'
 
 const Home = () => {
   return (
-    <div className="w-full flex justify-center items-center min-h-screen bg-black">
+    <div className="w-full flex justify-center items-start min-h-screen bg-black">
      <LeftHome/>
      <Feed/>
      <RightHome/>

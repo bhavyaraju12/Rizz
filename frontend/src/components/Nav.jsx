@@ -12,7 +12,7 @@ const Nav = () => {
   const navigate = useNavigate();
   const { userData } = useSelector((state) => state.user);
 
-  // FIX 1: Handle navigation safely if userData exists
+
   const handleProfileClick = () => {
     if (userData?.userName) {
       navigate(`/profile/${userData.userName}`);
@@ -20,34 +20,34 @@ const Nav = () => {
   };
 
   return (
-    // The fixed positioning and styling is good.
+   
     <div className='w-[90%] lg:w-[40%] h-[80px] bg-black flex items-center justify-around fixed bottom-[20px] rounded-full shadow-2xl shadow-[#000000] z-[100]'>
 
-      {/* FIX 2: Convert divs to buttons for accessibility */}
+      
       <button onClick={() => navigate("/")} aria-label="Home">
-        <GoHomeFill className='text-white w-[30px] h-[30px]' />
+        <GoHomeFill className='text-white w-[30px] h-[30px] cursor-pointer' />
       </button>
 
       <button aria-label="Search">
-        <FaSearch className='text-white w-[30px] h-[30px]' />
+        <FaSearch className='text-white w-[30px] h-[30px] cursor-pointer' />
       </button>
 
       <button onClick={() => navigate("/upload")} aria-label="Create Post">
-        <FaRegPlusSquare className='text-white w-[30px] h-[30px]' />
+        <FaRegPlusSquare className='text-white w-[30px] h-[30px] cursor-pointer' />
       </button>
 
       <button aria-label="Reels">
-        <BiMoviePlay className='text-white w-[30px] h-[30px]' />
+        <BiMoviePlay className='text-white w-[30px] h-[30px] cursor-pointer' />
       </button>
 
       <button
-        className='w-[40px] h-[40px] border-2 border-transparent focus:border-white focus:outline-none rounded-full overflow-hidden'
+        className='w-[40px] h-[40px] border-2 border-transparent focus:border-white focus:outline-none rounded-full overflow-hidden cursor-pointer'
         onClick={handleProfileClick}
         aria-label="View Profile"
       >
         <img
           src={userData?.profileImage || dp}
-          alt={userData?.fullName || "User Profile"} // More descriptive alt text
+          alt={userData?.fullName || "User Profile"} 
           className='w-full h-full object-cover'
         />
       </button>
