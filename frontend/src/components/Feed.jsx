@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import Post from "./Post";
 
 const Feed = () => {
-  const { postData } = useSelector((state) => state.post);
+  const { post } = useSelector((state) => state.post);
 
   return (
     <div className="w-full flex flex-col min-h-[100vh] bg-black border-r-2 border-gray-900">
@@ -16,7 +16,7 @@ const Feed = () => {
         <FaRegHeart className="text-white" size={25} />
       </div>
 
-      // Corrected Story Section
+  
 <div className="flex w-full overflow-x-auto gap-[20px] items-center p-[20px] hide-scrollbar">
   <StoryDp userName="abcde" />
   <StoryDp userName="fghij" />
@@ -29,8 +29,8 @@ const Feed = () => {
       <div className="w-full min-h-[100vh] flex flex-col items-center gap-[20px] p-[10px] pt-[40px] bg-white rounded-t-[60px] relative pb-[120px]">
         <Nav />
 
-        {postData?.map((post) => (
-          <Post postData={post} key={post._id} />
+        {post?.map((post) => (
+          <Post post={post} key={post._id} />
         ))}
       </div>
     </div>

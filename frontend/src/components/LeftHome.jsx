@@ -16,8 +16,8 @@ const LeftHome = () => {
     try{
 const result=await axios.post(
   `${serverUrl}/api/auth/signout`, 
-  {}, // empty body 
-  { withCredentials: true } // config
+  {}, 
+  { withCredentials: true } 
 )
 
 dispatch(setUserData(null))

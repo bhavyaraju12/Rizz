@@ -18,7 +18,7 @@ const Upload = ({ userData }) => {
   const [error, setError] = useState("");
 
   const handleGoBack = () => {
-    // Navigate back to the user's profile or previous page
+   
     if (userData?.userName) {
       navigate(`/profile/${userData.userName}`);
     } else {
@@ -33,7 +33,7 @@ const Upload = ({ userData }) => {
     setMediaType(file.type.includes("image") ? "image" : "video");
     setBackendMedia(file);
     setFrontendMedia(URL.createObjectURL(file));
-    setError(""); // Clear previous errors
+    setError(""); 
   };
 
   const handleUpload = async () => {
@@ -49,19 +49,19 @@ const Upload = ({ userData }) => {
     formData.append("media", backendMedia);
     formData.append("mediaType", mediaType);
 
-    // Conditionally add caption
+   
     if (uploadType !== "story") {
       formData.append("caption", caption);
     }
     
-    // Determine the correct API endpoint
+   
     const endpoint = `${serverUrl}/api/${uploadType}/upload`;
 
     try {
       const result = await axios.post(endpoint, formData, { withCredentials: true });
       console.log(`${uploadType} upload response`, result);
       
-      // On success, navigate to the user's profile
+      
       handleGoBack();
     } catch (err) {
       console.error(`Error while uploading ${uploadType}`, err);
@@ -71,7 +71,7 @@ const Upload = ({ userData }) => {
     }
   };
 
-  // Helper component for the tab buttons to avoid repeating styles
+ 
   const TabButton = ({ type, label }) => {
     const isActive = uploadType === type;
     return (
@@ -100,17 +100,16 @@ const Upload = ({ userData }) => {
         <h1 className="text-white text-xl font-semibold">Upload Media</h1>
       </div>
 
-      {/* Upload Type Selector */}
       <div className="w-full max-w-[600px] h-[60px] bg-white rounded-full flex justify-around items-center my-4">
         <TabButton type="post" label="Post" />
         <TabButton type="story" label="Story" />
         <TabButton type="loop" label="Loop" />
       </div>
 
-      {/* Content Area */}
+   
       <div className="w-full max-w-[500px] flex-grow flex flex-col items-center justify-center">
         {!frontendMedia ? (
-          // Initial Upload Box
+         
           <div
             className="w-full h-[250px] bg-[#0e1316] border-gray-800 border-2 flex flex-col items-center justify-center gap-2 rounded-2xl cursor-pointer hover:bg-[#353a3d] text-gray-500"
             onClick={() => mediaInput.current.click()}
@@ -120,7 +119,7 @@ const Upload = ({ userData }) => {
             <p className="text-lg font-semibold">Upload {uploadType}</p>
           </div>
         ) : (
-          // Media Preview and Form
+        
           <div className="w-full flex flex-col items-center gap-6">
             <div className="w-full h-[250px] rounded-2xl overflow-hidden">
               {mediaType === "image" ? (

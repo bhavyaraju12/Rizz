@@ -20,9 +20,15 @@ const userSlice=createSlice({
         },
         setProfileData: (state, action) => {
       state.profileData = action.payload; 
-        }
+        },
+         updateSavedPosts: (state, action) => {
+      if (state.userData) {
+        state.userData.saved = action.payload;
+      }
+    }
+
     }
     
 })
-export const {setUserData, setSuggestedUsers,setProfileData}=userSlice.actions
+export const {setUserData, setSuggestedUsers,setProfileData, updateSavedPosts}=userSlice.actions
 export default userSlice.reducer
